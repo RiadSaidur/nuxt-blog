@@ -3,10 +3,11 @@ import "firebase/firestore"
 import "firebase/storage"
 import "firebase/auth"
 
-import { firebaseConfig } from "@/config/firebaseConfig"
+// import { firebaseConfig } from "@/config/firebaseConfig"
+import nuxtConfig from "@/nuxt.config"
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
+  firebase.initializeApp(nuxtConfig.firebase.config)
 }else {
   // if already initialized, use that one
   firebase.app()
