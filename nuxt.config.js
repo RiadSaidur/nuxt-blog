@@ -34,6 +34,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/vercel-builder'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
