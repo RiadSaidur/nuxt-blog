@@ -7,9 +7,11 @@ import { firebaseConfig } from "@/config/firebaseConfig"
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
+  console.log(firebaseConfig)
 }else {
   // if already initialized, use that one
   firebase.app()
+  console.log('ssr', firebaseConfig);
 }
 
 export const firestore = firebase.firestore
