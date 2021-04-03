@@ -6,7 +6,7 @@ importScripts(
 importScripts(
   'https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js'
 )
-firebase.initializeApp({"apiKey":"\"AIzaSyCZEcItxMDM33o5vj0Is2LJwhLFE9zbj6U\",","authDomain":"\"nuxt-blog-syds.firebaseapp.com\",","projectId":"\"nuxt-blog-syds\",","storageBucket":"\"nuxt-blog-syds.appspot.com\",","messagingSenderId":"\"482298136194\",","appId":"\"1:482298136194:web:cf597214ed89fedebf569b\",","measurementId":"\"G-L9EGJ6Z2S3\",","databaseURL":"https:\u002F\u002Fnuxt-blog-syds.firebaseio.com"})
+firebase.initializeApp({"apiKey":"AIzaSyCZEcItxMDM33o5vj0Is2LJwhLFE9zbj6U","authDomain":"nuxt-blog-syds.firebaseapp.com","projectId":"nuxt-blog-syds","storageBucket":"nuxt-blog-syds.appspot.com","messagingSenderId":"482298136194","appId":"1:482298136194:web:cf597214ed89fedebf569b","measurementId":"G-L9EGJ6Z2S3","databaseURL":"https:\u002F\u002Ftravelersofbanagladesh.firebaseio.com"})
 
 // Initialize authService
 const authService = firebase.auth()
