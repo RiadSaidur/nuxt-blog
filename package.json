@@ -13,6 +13,7 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/firebase": "^7.5.0",
     "@nuxtjs/pwa": "^3.3.5",
+    "@nuxtjs/vercel-builder": "^0.21.2",
     "core-js": "^3.8.3",
     "firebase": "^8.2.10",
     "firebase-admin": "^9.5.0",
