@@ -24,7 +24,7 @@ export default {
       {
         hid: 'og:image:alt',
         property: 'og:image:alt',
-        content: this.post.Title
+        content: 'nuxt-blog'
       },
       {
         hid: 'twitter:title',
@@ -44,7 +44,7 @@ export default {
       {
         hid: 'twitter:image:alt',
         name: 'twitter:image:alt',
-        content: this.post.Title
+        content: 'nuxt-blog'
       }
     ],
     link: [
