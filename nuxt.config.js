@@ -1,5 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
+const defaultImage = "https://images.unsplash.com/photo-1533850595620-7b1711221751?ixid=MXwxMjA3fDB8MHxzZWFyY2h8M3x8dHJhdmVsbGluZ3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -8,7 +10,42 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: 'Explore and Share your Experience' },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: 'Explore and Share your Experience'
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: defaultImage
+      },
+      {
+        hid: 'og:image:alt',
+        property: 'og:image:alt',
+        content: this.post.Title
+      },
+      {
+        hid: 'twitter:title',
+        name: 'twitter:title',
+        content: 'nuxt-blog'
+      },
+      {
+        hid: 'twitter:description',
+        name: 'twitter:description',
+        content: 'Explore and Share your Experience'
+      },
+      {
+        hid: 'twitter:image',
+        name: 'twitter:image',
+        content: defaultImage
+      },
+      {
+        hid: 'twitter:image:alt',
+        name: 'twitter:image:alt',
+        content: this.post.Title
+      }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
