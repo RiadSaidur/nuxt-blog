@@ -1,20 +1,38 @@
 <template>
-  <v-col class="pa-0">
-    <v-img
-      :src="post.TitleImage || defaultImage"
-      height="200px"
-    />
+  <v-card>
+    <nuxt-link :to="`/${post.author}/${post.postID}`">
+      <v-img
+        :src="post.TitleImage || defaultImage"
+        class="white--text align-end"
+        gradient="to left, rgba(0,0,0,.1), rgba(0,0,0,.6)"
+        height="200px"
+      >
+        <v-card-title v-text="post.Title" />
 
-    <v-card-title>
-      <nuxt-link :to="`/${post.author}/${post.postID}`" v-text="post.Title" />
-    </v-card-title>
+        <v-card-subtitle >
+          written by: <nuxt-link :to="`/${post.author}`" v-text="post.author" class="author-link"/>
+        </v-card-subtitle>
 
-    <v-card-subtitle>
-      written by: <nuxt-link :to="`/${post.author}`" v-text="post.author" />
-    </v-card-subtitle>
+        <v-card-text v-html="post.Body.split(/\<*>/g)[1].split(/<\//g)[0]" />
+      </v-img>
+    </nuxt-link>
 
-    <v-card-text v-html="post.Body" />
-  </v-col>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-bookmark</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-share-variant</v-icon>
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -28,3 +46,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .author-link {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .author-link:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+</style>

@@ -14,13 +14,14 @@
           :to="item.to"
           router
           exact
+          v-show="(item.access === 'private' && !isAuth) ? false : true"
         >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -90,6 +91,7 @@
 </template>
 
 <script>
+import { currentUser } from '@/firebase/firebase'
 import AuthBtn from '../components/user/AuthBtn'
 
 export default {
@@ -105,23 +107,31 @@ export default {
         {
           icon: 'mdi-home',
           title: 'Welcome',
-          to: '/'
+          to: '/',
+          access: 'public'
         },
         {
           icon: 'mdi-pencil',
           title: 'Create Post',
-          to: '/create-post'
+          to: '/create-post',
+          access: "private"
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
-          to: '/inspire'
+          to: '/inspire',
+          access: 'public'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: 'nuxt-blog'
+    }
+  },
+  computed: {
+    isAuth() {
+      return this.$store.state.token ? true: false
     }
   }
 }

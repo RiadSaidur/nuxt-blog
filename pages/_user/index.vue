@@ -1,7 +1,27 @@
 <template>
-  <v-container v-if="posts">
-    <Profile />
-    <Posts :posts="posts" class="mt-5" />
+  <v-container>
+    <!-- <Profile /> -->
+    <v-toolbar-title class="px-4 pb-4">{{ user }}</v-toolbar-title>
+    <v-tabs
+      v-model="tab"
+      align-with-title
+    >
+      <v-tabs-slider color="red lighten-3"></v-tabs-slider>
+      
+      <v-tab
+        v-for="item in items"
+        :key="item"
+      >
+        {{ item }}
+      </v-tab>
+
+      <v-tab-item>
+        <Profile />
+      </v-tab-item>
+      <v-tab-item>
+        <Posts :posts="posts" class="mt-5"/>
+      </v-tab-item>
+    </v-tabs>
   </v-container>
 </template>
 
@@ -24,6 +44,10 @@ export default {
   },
   data() {
     return {
+      tab: null,
+      items: [
+        'Profile', 'Experiences'
+      ],
       posts: ''
     }
   },

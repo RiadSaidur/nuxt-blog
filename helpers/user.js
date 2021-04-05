@@ -10,6 +10,16 @@ export const createNewUser = async (uid, userInfo) => {
   }
 }
 
+export const updateUser =  async (uid, userInfo) => {
+  try {
+    await users.doc(uid).update({ displayName: userInfo.displayName })
+    return true
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+}
+
 export const getUserByUid = async uid => {
   try {
     const userDoc = await users.doc(uid).get()

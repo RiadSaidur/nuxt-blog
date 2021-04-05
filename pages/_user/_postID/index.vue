@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card elevation="0">
+    <v-card elevation="0 pt-4">
       <v-img :src="post.TitleImage || defaultImage" max-height="300px" :contain="true"/>
 
       <v-card-title v-text='post.Title' />

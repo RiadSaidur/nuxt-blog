@@ -127,15 +127,11 @@ export default {
         modules: {
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'],
+            ['blockquote'],
             [{ header: 2 }],
             [{ list: 'ordered' }, { list: 'bullet' }],
-            [{ script: 'sub' }, { script: 'super' }],
-            [{ indent: '-1' }, { indent: '+1' }],
-            [{ direction: 'rtl' }],
-            [{ header: [2, 3, 4, 5, 6, false] }],
-            [{ color: [] }, { background: [] }],
-            ['clean'],
+            [{ script: 'super' }],
+            [{ color: [] }],
             ['link', 'image']
           ],
           syntax: {

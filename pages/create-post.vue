@@ -11,6 +11,7 @@ export default {
   components: {
     PostEditor
   },
+  middleware: ['authenticated'],
   data() {
     return {
       // input field values

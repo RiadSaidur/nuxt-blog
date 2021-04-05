@@ -1,9 +1,18 @@
 <template>
-  <v-row justify="center">
-    <v-card v-for="(post, idx) in posts" :key="idx" max-width="400px" height="460px" class="ma-2 overflow-hidden" elevation="1">
-      <PostCard :post="post" />
-    </v-card>
-  </v-row>
+  <v-container fluid>
+    <v-row dense>
+      <v-col
+        v-for="(post, idx) in posts"
+        :key="idx"
+        xs="12"
+        sm="6"
+        md="4"
+        xl="3"
+      >
+        <PostCard :post="post" />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

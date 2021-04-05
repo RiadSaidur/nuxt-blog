@@ -57,6 +57,7 @@ export default {
     // 'quill/dist/quill.core.css',
     // for snow theme
     'quill/dist/quill.snow.css',
+    '@/assets/main.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -119,7 +120,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: false,
+      dark: true,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -132,10 +133,6 @@ export default {
         }
       }
     }
-  },
-
-  router: {
-    middleware: "routerGuard"
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

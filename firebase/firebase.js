@@ -3,8 +3,7 @@ import "firebase/firestore"
 import "firebase/storage"
 import "firebase/auth"
 
-// import { firebaseConfig } from "@/config/firebaseConfig"
-import nuxtConfig from "@/nuxt.config"
+import nuxtConfig from '@/nuxt.config'
 
 if (!firebase.apps.length) {
   firebase.initializeApp(nuxtConfig.firebase.config)
@@ -17,6 +16,7 @@ export const firestore = firebase.firestore
 
 const auth = firebase.auth()
 export const currentUser = () => auth.currentUser?.email
+export const currentUserUid = () => auth.currentUser?.uid
 
 const db = firebase.firestore()
 export const posts = db.collection("posts")
