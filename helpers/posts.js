@@ -12,7 +12,7 @@ export const createCommentDoc = async postID => {
 export const uploadTitleImage = async (author, TitleImage) => {
   try {
     await titleImage.child(`${author}/${TitleImage.name}`).put(TitleImage)
-    const imageURL = `https://firebasestorage.googleapis.com/v0/b/travelersofbanagladesh.appspot.com/o/${encodeURI(author)}%2F${TitleImage.name}?alt=media`
+    const imageURL = `https://firebasestorage.googleapis.com/v0/b/nuxt-blog-syds.appspot.com/o/${encodeURI(author)}%2F${TitleImage.name}?alt=media`
     return imageURL
   } catch (err) {
     console.log(err)
