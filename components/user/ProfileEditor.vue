@@ -32,6 +32,10 @@ export default {
         {
           name: "displayName",
           icon: "mdi-format-title"
+        },
+        {
+          name: "username",
+          icon: "mdi-format-title"
         }
       ],
       textRules: [

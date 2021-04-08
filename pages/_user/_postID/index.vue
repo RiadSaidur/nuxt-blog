@@ -99,11 +99,11 @@ export default {
       return this.$nuxt._route.params.postID
     },
     isAuthor() {
-      return this.$store.state.user?.email === this.post.author
-    }
+      return this.$store.state.user?.username === this.post.author
+    },
   },
   async fetch() {
-    this.post = await this.$store.getters.getSinglePost(this.postID)
+    this.post = await this.$store.getters['posts/getSinglePost'](this.postID)
     this.post.slug = this.post.Body.split(/\<*>/g)[1].split(/<\//g)[0]
   }
 }

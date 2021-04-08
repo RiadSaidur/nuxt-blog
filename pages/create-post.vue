@@ -1,6 +1,6 @@
 <template>
   <section>
-    <post-editor :experience="experience" :saveExperience="saveExperience" :update="false" />
+    <post-editor :experience="experience" :saveExperience="saveExperience" :update="false" :loading="loading" />
   </section>
 </template>
 
@@ -14,6 +14,7 @@ export default {
   middleware: ['authenticated'],
   data() {
     return {
+      loading: false,
       // input field values
       experience: {
         Title: '',
@@ -33,7 +34,11 @@ export default {
     // Save experience in the DB
     async saveExperience() {
       this.loading =  true
-      const postID = await newPost(this.experience)
+      const post = {
+        author: this.$store.state.user.username,
+        ...this.experience
+      }
+      const postID = await newPost(post)
       if(postID) this.$nuxt.$options.router.push(`/posts/${postID}`)
       else console.log('ops')
       this.loading = false

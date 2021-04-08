@@ -1,23 +1,21 @@
-import { currentUser } from "@/firebase/firebase"
 import { validateNewPost } from "@/validators/postValidators"
 import { uploadTitleImage, createPostDoc, createCommentDoc, updatePostDoc, deletePostDocByID, deleteCommentsDocByID } from "@/helpers/posts"
 
 // create new blog post
 export const newPost = async post => {
-  const author = currentUser()
-  if(!author) return console.log('User not signed in')
+  if(!post.author) return console.log('User not signed in')
 
   const { postData, TitleImage } = validateNewPost(post)
 
   // upload title image if available
   if(TitleImage) {
-    const imageURL = await uploadTitleImage(author, TitleImage)
+    const imageURL = await uploadTitleImage(postData.author, TitleImage)
     if(!imageURL) return false
     postData.TitleImage = imageURL
   }
 
   // create new post
-  const postID = await createPostDoc(author, postData)
+  const postID = await createPostDoc(postData)
   if(!postID) return false
 
   // set up a comment box for this post
@@ -28,9 +26,9 @@ export const newPost = async post => {
 
 // update blog post
 export const updatePostByID = async (post, postID) => {
-  const author = currentUser()
-  if(!author) return console.log('User not signed in')
-  if(author != post.author) return console.log('User does not have access rights to the content')
+  const currentUser = localStorage.username
+  if(!currentUser) return console.log('User not signed in')
+  if(currentUser != post.author) return console.log('User does not have access rights to the content')
 
   const postIDUpdated = await updatePostDoc(post, postID)
   if(!postIDUpdated) return false
@@ -39,9 +37,9 @@ export const updatePostByID = async (post, postID) => {
 }
 
 export const deletePostByID = async (post, postID) => {
-  const author = currentUser()
-  if(!author) return console.log('User not signed in')
-  if(author != post.author) return console.log('User does not have access rights to the content')
+  const currentUser = localStorage.username
+  if(!currentUser) return console.log('User not signed in')
+  if(currentUser != post.author) return console.log('User does not have access rights to the content')
 
   const isDeleted = await deletePostDocByID(postID)
 

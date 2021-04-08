@@ -91,7 +91,6 @@
 </template>
 
 <script>
-import { currentUser } from '@/firebase/firebase'
 import AuthBtn from '../components/user/AuthBtn'
 
 export default {
@@ -126,12 +125,12 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'nuxt-blog'
+      title: 'nuxt-blog-syds'
     }
   },
   computed: {
     isAuth() {
-      return this.$store.state.token ? true: false
+      return this.$store.state.user ? true : false
     }
   }
 }

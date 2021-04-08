@@ -20,9 +20,8 @@ export const uploadTitleImage = async (author, TitleImage) => {
   }
 }
 
-export const createPostDoc = async (author, postData) => {
+export const createPostDoc = async (postData) => {
   try {
-    postData.author = author
     postData.createdAt = new Date().toLocaleString()
     const res = await posts.add(postData)
     return res.id

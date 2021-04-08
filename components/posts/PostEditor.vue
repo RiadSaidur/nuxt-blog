@@ -83,7 +83,7 @@ import Delete from "@/components/base/Delete"
 
 export default {
   name: "post-editor",
-  props: [ "experience", "saveExperience", "update", "deleteExperience" ],
+  props: [ "experience", "saveExperience", "update", "deleteExperience", "loading" ],
   components: {
     Delete
   },
@@ -92,7 +92,6 @@ export default {
       dialog: false,
       isMenu: false,
       isValid: false,
-      loading: false,
       inputFields: [
         {
           name: "Title",

@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import User from '@/components/user/User'
 
 export default {
@@ -38,7 +37,9 @@ export default {
   },
   computed : {
     // returns photoURL if there is user in state
-    ...mapState({ photoURL: state => state.user ? state.user.photoURL : null })
+    photoURL() {
+      return this.$store.state.user ? this.$store.state.user.photoURL : null
+    }
 
   }
 }

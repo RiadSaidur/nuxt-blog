@@ -18,11 +18,11 @@ export default {
   },
   computed:{
     posts() {
-      return this.$store.state.posts
+      return this.$store.state.posts.posts
     }
   },
   mounted() {
-    this.$store.dispatch('getPosts')
+    this.$store.dispatch('posts/getPosts')
   }
 }
 </script>

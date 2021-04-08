@@ -48,7 +48,8 @@ export default {
       return {
         displayName: this.$store.state.user?.displayName,
         photoURL: this.$store.state.user?.photoURL,
-        email: this.$store.state.user?.email
+        email: this.$store.state.user?.email,
+        username: this.$store.state.user?.username
       }
     },
     targetUser() {
@@ -56,18 +57,23 @@ export default {
     }
   },
   created() {
-    if(this.targetUser != this.profile.email) this.$nuxt.$options.router.push("/")
+    if(this.targetUser != this.profile.username) this.$nuxt.$options.router.push("/")
   },
   methods: {
     async updateProfile() {
+      this.profile.username = this.replaceWhiteSpaceAndToLowerCase(this.profile.username)
       const success = await updateUserProfile(this.profile)
       if(success) {
         this.snackbar = true
         this.text = "Successfully updated profile"
+        this.$store.dispatch('updateCurrentUser', this.profile)
       } else {
         this.snackbar = true
         this.text = "Updating profile failed"
       }
+    },
+    replaceWhiteSpaceAndToLowerCase(text) {
+      return text.replaceAll(/\s/g,'').toLowerCase()
     }
   }
 }

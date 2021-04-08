@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="px-0">
     <v-row dense>
       <v-col
         v-for="(post, idx) in posts"

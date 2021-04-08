@@ -99,8 +99,8 @@ export default {
       auth: {
         ssr: true,
         initialize: {
-          onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
-          // onAuthStateChangedAction: 'onAuthStateChangedAction'
+          // onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
+          onAuthStateChangedAction: 'onAuthStateChangedAction'
         }
       }
     }

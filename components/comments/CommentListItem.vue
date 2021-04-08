@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { getUserByEmail } from '@/helpers/user'
+import { getUserByUsername } from '@/helpers/user'
 import Delete from "@/components/base/Delete"
 
 export default {
@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     currentUser() {
-      return this.$store.state.user?.email
+      return this.$store.state.user?.username
     }
   },
   mounted() {
@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     async getAuthorDisplayPhoto() {
-      const author = await getUserByEmail(this.comment.author)
+      const author = await getUserByUsername(this.comment.author)
       return this.authorDisplayPhoto = author.photoURL
     }
   }

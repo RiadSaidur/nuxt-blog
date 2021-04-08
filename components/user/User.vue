@@ -15,12 +15,11 @@
           >
         </v-avatar>
       </div>
-      <v-card-title class="headline justify-center">
-        {{ user.displayName }}
-      </v-card-title>
-      <v-card-subtitle class="text-center">
-        {{ user.email }}
-      </v-card-subtitle>
+      <nuxt-link :to="`/${user.username}`">
+        <v-card-title class="headline justify-center" v-text="user.username" />
+      </nuxt-link>
+      <v-card-subtitle class="text-center" v-text="user.displayName" />
+      <v-card-subtitle class="text-center" v-text="user.email" />
     </div>
 
     <v-divider></v-divider>
@@ -41,14 +40,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   data: () => ({
     isLoading: false
   }),
   computed: {
-    ...mapState(['user'])
+    user() {
+      return this.$store.state.user
+    }
   },
   methods: {
     async signin() {
@@ -61,6 +60,7 @@ export default {
 
           let token = credential.idToken
           localStorage.token = token
+          user.username = `${ user.displayName.replaceAll(/\s/g,'').toLowerCase() }-${Math.random() * 1000}`
           // const user = {
           //   displayName: 'psychopath syd',
           //   email: "reidvai1998@gmail.com",

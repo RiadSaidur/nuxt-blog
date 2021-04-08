@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <!-- <Profile /> -->
     <v-toolbar-title class="px-4 pb-4">{{ user }}</v-toolbar-title>
     <v-tabs
       v-model="tab"

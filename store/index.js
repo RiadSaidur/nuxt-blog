@@ -1,69 +1,73 @@
-import { getAllPosts, getPostByID } from "@/handlers/public/posts"
 import { createNewUser, getUserByUid } from "@/helpers/user"
 
 export const state = () => ({
   token: null,
-  user: null,
-  posts: []
+  user: null
 })
 
-export const getters = {
-  getSinglePost: state => async postID => {
-    const posts = state.posts
-    let post = posts.find(post => post.postID === postID) || await getPostByID(postID)
-    return post
-  }
-}
-
 export const mutations = {
-  ON_AUTH_STATE_CHANGED_MUTATION(state, { authUser }) {
-    if(authUser) {
-      const { email, displayName, photoURL } = authUser
-      state.user = { email, displayName, photoURL }
-      if(process.browser) state.token = localStorage.token
-    }
-    else {
-      state.user = null
-      state.token  = null
-    }
-  },
-  SET_POSTS(state, posts) {
-    state.posts = posts
-  },
   SET_USER(state, userInfo) {
     state.user = userInfo
+  },
+
+  UPDATE_USER(state, userInfo) {
+    state.user.displayName = userInfo.displayName
+    state.user.username = userInfo.username
+  },
+
+  SET_TOKEN(state, token) {
+    state.token = token
+  },
+
+  REMOVE_USER(state) {
+    state.user = null
+    state.token  = null
   }
 }
 
 export const actions = {
-  async nuxtServerInit ({ commit }, { res }) {
-    if(res && res.locals && res.locals.user) {
-      const { claims, ...authUser } = res.locals.user
-      commit('ON_AUTH_STATE_CHANGED_MUTATION', { authUser, claims })
-    }
-  },
-  async getPosts({ state, commit }) {
-    if(!state.posts.length) {
-      const posts = await getAllPosts()
-      commit('SET_POSTS', posts)
-    }
-  },
-  async getUser({ dispatch }, user) {
-    const userInfo = {
-      displayName: user.displayName,
-      email: user.email,
-      photoURL: user.photoURL
+  async onAuthStateChangedAction({ dispatch, commit }, { authUser }) {
+    if(!authUser) return commit('REMOVE_USER')
+
+    // if user is already authenticated
+    const user = {
+      uid: authUser.uid
     }
     
+    dispatch('getUser', user)
+    if(process.browser) commit('SET_TOKEN', localStorage.token)
+  },
+
+  async getUser({ dispatch }, user) {
     const uid = user.uid
     const signedUser = await getUserByUid(uid)
 
     if(signedUser) return dispatch('setCurrentUser', signedUser)
 
+    // if this is signing in first time
+    dispatch('createNewUserProfile', user)
+    
+  },
+
+  async createNewUserProfile({ dispatch }, user) {
+    const userInfo = {
+      displayName: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
+      username: user.username
+    }
+
     const newUser = await createNewUser(uid, userInfo)
     dispatch('setCurrentUser', newUser)
   },
+
   setCurrentUser({ commit }, userInfo) {
+    localStorage.username =  userInfo.username
     commit('SET_USER', userInfo)
+  },
+
+  updateCurrentUser({ commit }, userInfo) {
+    localStorage.username =  userInfo.username
+    commit('UPDATE_USER', userInfo)
   }
 }

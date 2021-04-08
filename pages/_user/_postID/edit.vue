@@ -7,8 +7,6 @@
 <script>
 import PostEditor from "@/components/posts/PostEditor"
 import { deletePostByID, updatePostByID } from '@/handlers/protected/posts'
-import { currentUser } from '@/firebase/firebase'
-
 
 export default {
   components: {
@@ -31,13 +29,16 @@ export default {
     },
     postAuthor() {
       return this.$nuxt._route.params.user
+    },
+    currentUser() {
+      return this.$store.state.user?.username
     }
   },
   async fetch() {
-    this.experience = await this.$store.getters.getSinglePost(this.postID)
+    this.experience = await this.$store.getters['posts/getSinglePost'](this.postID)
   },
   created() {
-    if(this.postAuthor != currentUser()) this.$nuxt.$options.router.push("/")
+    if(this.postAuthor != this.currentUser) this.$nuxt.$options.router.push("/")
   },
   methods: {
     async deleteExperience() {

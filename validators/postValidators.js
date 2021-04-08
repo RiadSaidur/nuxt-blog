@@ -4,7 +4,8 @@ export const validateNewPost = post => {
       Title: post.Title.trim(),
       Place: post.Place.trim(),
       Body: post.Body.trim(),
-      VisitDate: post.VisitDate
+      VisitDate: post.VisitDate,
+      author: post.author
     },
     TitleImage: post.TitleImage,
   }
