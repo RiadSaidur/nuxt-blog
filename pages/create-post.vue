@@ -1,14 +1,20 @@
 <template>
   <section>
-    <post-editor :experience="experience" :saveExperience="saveExperience" :update="false" :loading="loading" />
+    <post-editor @submit="saveExperience" :update="false" :loading="loading" />
   </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { POST } from '@/interface/types/post'
 
 import PostEditor from "@/components/posts/PostEditor.vue"
 import { newPost } from '@/handlers/protected/posts'
+
+interface NEWPOST extends POST {
+  author: string;
+  TitleImage: File;
+}
 
 export default Vue.extend({
   components: {
@@ -40,13 +46,10 @@ export default Vue.extend({
   },
   methods: {
     // Save experience in the DB
-    async saveExperience() {
+    async saveExperience(experience: NEWPOST) {
       this.loading =  true
-      const post = {
-        author: this.author,
-        ...this.experience
-      }
-      const postID = await newPost(post)
+      experience.author = this.author
+      const postID = await newPost(experience)
       if(postID) this.$nuxt.$options.router.push(`/posts/${postID}`)
       else console.log('ops')
       this.loading = false

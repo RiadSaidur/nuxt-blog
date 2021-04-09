@@ -1,6 +1,6 @@
 <template>
   <section>
-    <post-editor :experience="experience" :saveExperience="saveExperience" :deleteExperience="deleteExperience" :update="true" />
+    <post-editor @submit="saveExperience" :deleteExperience="deleteExperience" :update="true" :loading="loading" />
   </section>
 </template>
 
@@ -27,13 +27,12 @@ export default Vue.extend({
   middleware: ['authenticated'],
   data() {
     return {
-      loading: false,
-      experience: {} as NEWPOST,
+      loading: false
     }
   },
   head(): HEAD {
     return {
-      title: `Edit - ${this.experience.Title}`
+      title: `Edit - ${this.experience?.Title}`
     }
   },
   computed: {
@@ -45,6 +44,9 @@ export default Vue.extend({
     },
     currentUser(): string {
       return this.$store.state.user?.username
+    },
+    experience(): NEWPOST {
+      return this.$store.state.posts.postForm
     }
   },
   async fetch() {
@@ -59,10 +61,10 @@ export default Vue.extend({
       if(isDeleted) this.$nuxt.$options.router.push("/")
     },
     // Save experience in the DB
-    async saveExperience() {
+    async saveExperience(experience: NEWPOST) {
       this.loading =  true
-      this.experience.author = this.currentUser
-      const postID = await updatePostByID(this.experience, this.postID)
+      experience.author = this.currentUser
+      const postID = await updatePostByID(experience, this.postID)
       if(postID) this.$nuxt.$options.router.push(`/posts/${postID}`)
       else console.log('ops')
       this.loading = false

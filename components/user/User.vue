@@ -65,13 +65,15 @@ export default Vue.extend({
           localStorage.token = token
           // if(user?.displayName) user.displayName = `${ user.displayName.replaceAll(/\s/g,'').toLowerCase() }-${Math.random() * 1000}`
           
-          // const user = {
-          //   displayName: 'psychopath syd',
-          //   email: "reidvai1998@gmail.com",
-          //   photoURL: "https://lh3.googleusercontent.com/a-/AOh14GiinUf41vFllUpL4SBjEf259VO-jvc3rQptQsDFlw",
-          //   uid: "ESxgbPZ458Y3qqcfuQnarKMSFb32"
-          // }
-          this.$store.dispatch('getUser', user)
+          const userProfle = {
+            displayName: user?.displayName,
+            email: user?.email,
+            photoURL: user?.photoURL,
+            uid: user?.uid,
+            username: `${ user?.displayName?.replaceAll(/\s/g,'').toLowerCase() }-${Math.random() * 1000}`
+          }
+          
+          this.$store.dispatch('getUser', userProfle)
         } catch (err) {
           // let errorCode = error.code
           // let errorMessage = error.message

@@ -19,6 +19,16 @@
       </v-list-item-content>
     </v-list-item>
 
+    <!-- <v-text-field
+      v-model="experience.Title"
+      :label="experience.Title"
+      :rules="textRules"
+      hide-details="auto"
+      class="mb-5"
+      autocomplete="off"
+      prepend-icon="mdi-format-title"
+    ></v-text-field> -->
+
     <!-- Date -->
     <v-menu
       v-model="isMenu"
@@ -70,7 +80,7 @@
       class="my-2 primary"
       block 
       :disabled="!experience.Title || !experience.Body || !experience.Place || loading"
-      :loading=loading
+      :loading="loading"
     >Share</v-btn>
 
     <Delete v-if="update" type="Post" :deleteItem="deleteExperience" />
@@ -80,17 +90,25 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { POST } from '@/interface/types/post'
 
 import Delete from "@/components/base/Delete.vue"
+import { getPostByID } from '@/handlers/public/posts'
+
+interface NEWPOST extends POST {
+  author: string;
+  TitleImage: File;
+}
 
 export default Vue.extend({
   name: "post-editor",
-  props: [ "experience", "saveExperience", "update", "deleteExperience", "loading" ],
+  props: [ "update", "deleteExperience", "loading" ],
   components: {
     Delete
   },
   data() {
     return {
+      experience: {} as NEWPOST,
       dialog: false,
       isMenu: false,
       isValid: false,
@@ -137,6 +155,19 @@ export default Vue.extend({
           ]
         }
       }
+    }
+  },
+  computed: {
+    postID(): string {
+      return this.$route.params.postID
+    }
+  },
+  async fetch() {
+    if(this.update) this.experience = <NEWPOST>(await getPostByID(this.postID))
+  },
+  methods: {
+    saveExperience() {
+      this.$emit('submit', this.experience)
     }
   }
 })
