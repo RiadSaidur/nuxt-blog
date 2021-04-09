@@ -21,11 +21,13 @@
   </v-list-item>
 </template>
 
-<script>
-import { getUserByUsername } from '@/helpers/user'
-import Delete from "@/components/base/Delete"
+<script lang="ts">
+import Vue from 'vue'
 
-export default {
+import { getUserByUsername } from '@/helpers/user'
+import Delete from "@/components/base/Delete.vue"
+
+export default Vue.extend({
   props: [ 'comment', 'deleteComment' ],
   components: {
     Delete
@@ -36,7 +38,7 @@ export default {
     }
   },
   computed: {
-    currentUser() {
+    currentUser(): string {
       return this.$store.state.user?.username
     }
   },
@@ -51,8 +53,8 @@ export default {
   methods: {
     async getAuthorDisplayPhoto() {
       const author = await getUserByUsername(this.comment.author)
-      return this.authorDisplayPhoto = author.photoURL
+      return this.authorDisplayPhoto = (<any>author)?.photoURL
     }
   }
-}
+})
 </script>

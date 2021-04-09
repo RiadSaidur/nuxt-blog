@@ -28,21 +28,30 @@
   </v-container>
 </template>
 
-<script>
-import Comments from "@/components/comments/Comments"
+<script lang="ts">
+import Vue from 'vue'
+import { POST } from '@/interface/types/post'
 
-export default {
+import Comments from "@/components/comments/Comments.vue"
+
+interface POSTVIEW extends POST {
+  author: string;
+  slug?: string;
+  TitleImage: string;
+}
+
+export default Vue.extend({
   name: "Post",
   components: {
     Comments
   },
   data() {
     return {
-      post: '',
+      post: {} as POSTVIEW,
       defaultImage: "https://images.unsplash.com/photo-1533850595620-7b1711221751?ixid=MXwxMjA3fDB8MHxzZWFyY2h8M3x8dHJhdmVsbGluZ3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
     }
   },
-  head() {
+  head(): any {
     return {
       title: this.post.Title,
       meta: [
@@ -95,10 +104,10 @@ export default {
     }
   },
   computed: {
-    postID() {
-      return this.$nuxt._route.params.postID
+    postID(): string {
+      return this.$route.params.postID
     },
-    isAuthor() {
+    isAuthor(): boolean {
       return this.$store.state.user?.username === this.post.author
     },
   },
@@ -106,5 +115,5 @@ export default {
     this.post = await this.$store.getters['posts/getSinglePost'](this.postID)
     this.post.slug = this.post.Body.split(/\<*>/g)[1].split(/<\//g)[0]
   }
-}
-</script>
+})
+</script> 

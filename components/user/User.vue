@@ -39,8 +39,10 @@
   </v-card>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   data: () => ({
     isLoading: false
   }),
@@ -58,9 +60,11 @@ export default {
           const provider = new this.$fireModule.auth.GoogleAuthProvider()
           const { credential, user } = await this.$fireModule.auth().signInWithPopup(provider)
 
-          let token = credential.idToken
+          let token = (<any>credential)?.idToken
+          
           localStorage.token = token
-          user.username = `${ user.displayName.replaceAll(/\s/g,'').toLowerCase() }-${Math.random() * 1000}`
+          // if(user?.displayName) user.displayName = `${ user.displayName.replaceAll(/\s/g,'').toLowerCase() }-${Math.random() * 1000}`
+          
           // const user = {
           //   displayName: 'psychopath syd',
           //   email: "reidvai1998@gmail.com",
@@ -73,7 +77,7 @@ export default {
           // let errorMessage = error.message
           // let email = error.email
           // let credential = error.credential
-          console.log('err:', error)
+          console.log('err:', err)
         }
         
         this.isLoading = false
@@ -109,5 +113,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

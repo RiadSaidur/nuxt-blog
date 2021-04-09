@@ -4,33 +4,46 @@
   </section>
 </template>
 
-<script>
-import PostEditor from "@/components/posts/PostEditor"
+<script lang="ts">
+import Vue from 'vue'
+import { POST } from '@/interface/types/post'
+
+import PostEditor from "@/components/posts/PostEditor.vue"
 import { deletePostByID, updatePostByID } from '@/handlers/protected/posts'
 
-export default {
+interface HEAD {
+  title: string;
+}
+
+interface NEWPOST extends POST {
+  author: string;
+  TitleImage: File;
+}
+
+export default Vue.extend({
   components: {
     PostEditor
   },
   middleware: ['authenticated'],
   data() {
     return {
-      experience: {},
+      loading: false,
+      experience: {} as NEWPOST,
     }
   },
-  head() {
+  head(): HEAD {
     return {
       title: `Edit - ${this.experience.Title}`
     }
   },
   computed: {
-    postID() {
-      return this.$nuxt._route.params.postID
+    postID(): string {
+      return this.$route.params.postID
     },
-    postAuthor() {
-      return this.$nuxt._route.params.user
+    postAuthor(): string {
+      return this.$route.params.user
     },
-    currentUser() {
+    currentUser(): string {
       return this.$store.state.user?.username
     }
   },
@@ -48,6 +61,7 @@ export default {
     // Save experience in the DB
     async saveExperience() {
       this.loading =  true
+      this.experience.author = this.currentUser
       const postID = await updatePostByID(this.experience, this.postID)
       if(postID) this.$nuxt.$options.router.push(`/posts/${postID}`)
       else console.log('ops')
@@ -67,5 +81,5 @@ export default {
       // }
     }
   }
-}
+})
 </script>

@@ -19,8 +19,10 @@
   </v-form>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   name: "comment-form",
   props: [
     "addComment",
@@ -29,11 +31,11 @@ export default {
   data() {
     return {
       commentRules: [
-        value => !!value || 'Required.',
-        value => (value && value.length >= 2) || 'Min 2 characters',
+        (value: string) => !!value || 'Required.',
+        (value: string) => (value && value.length >= 2) || 'Min 2 characters',
       ],
       loading: false
     }
   }
-}
+})
 </script>

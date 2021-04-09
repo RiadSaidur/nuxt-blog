@@ -24,19 +24,26 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import { POST } from '@/interface/types/post'
+
 import { getPostByUser } from '@/handlers/public/posts'
 
-import Profile from '@/components/user/Profile'
-import Posts from '@/components/posts/Posts'
+import Profile from '@/components/user/Profile.vue'
+import Posts from '@/components/posts/Posts.vue'
 
-export default {
+interface HEAD {
+  title: string;
+}
+
+export default Vue.extend({
   name: "user",
   components: {
     Profile,
     Posts
   },
-  head() {
+  head(): HEAD {
     return {
       title: `Explore - ${this.user}`
     }
@@ -47,16 +54,16 @@ export default {
       items: [
         'Profile', 'Experiences'
       ],
-      posts: ''
+      posts: <POST[] | boolean> false
     }
   },
   computed: {
-    user() {
-      return this.$nuxt._route.params.user
+    user(): string {
+      return this.$route.params.user
     }
   },
   async fetch() {
     this.posts = await getPostByUser(this.user)
   }
-}
+})
 </script>

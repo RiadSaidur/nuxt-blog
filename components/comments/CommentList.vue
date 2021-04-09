@@ -11,10 +11,13 @@
   </v-container>
 </template>
 
-<script>
-import CommentListItem from '@/components/comments/CommentListItem'
+<script lang="ts">
+import Vue from 'vue'
 
-export default {
+import CommentListItem from '@/components/comments/CommentListItem.vue'
+import { COMMENT } from '@/interface/types/comment'
+
+export default Vue.extend({
   name: "comment-list",
   props: [ "comments", "deleteComment" ],
   components: {
@@ -22,8 +25,8 @@ export default {
   },
   computed: {
     commentList() {
-      return this.comments.sort((a, b) => b.createdAt.localeCompare(a.last_nom))
+      return this.comments.sort((a: COMMENT, b: COMMENT) => b.createdAt.localeCompare(a.createdAt))
     }
   }
-}
+})
 </script>

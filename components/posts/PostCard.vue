@@ -35,13 +35,15 @@
   </v-card>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   name: "Post",
   props: ["post"],
   computed: {
-    isAuth() {
-      return this.$store.state.user
+    isAuth(): string {
+      return this.$store.state.user?.username
     }
   },
   data() {
@@ -64,7 +66,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style scoped>

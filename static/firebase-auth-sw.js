@@ -1,12 +1,12 @@
 const ignorePaths = ["\u002F__webpack_hmr","\u002F_loading","\u002F_nuxt\u002F"]
 
 importScripts(
-  'https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js'
+  'https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js'
 )
 importScripts(
-  'https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js'
+  'https://www.gstatic.com/firebasejs/8.3.3/firebase-auth.js'
 )
-firebase.initializeApp({"apiKey":"AIzaSyCZEcItxMDM33o5vj0Is2LJwhLFE9zbj6U","authDomain":"nuxt-blog-syds.firebaseapp.com","projectId":"nuxt-blog-syds","storageBucket":"nuxt-blog-syds.appspot.com","messagingSenderId":"482298136194","appId":"1:482298136194:web:cf597214ed89fedebf569b","measurementId":"G-L9EGJ6Z2S3","databaseURL":"https:\u002F\u002Fnuxt-blog-syds.firebaseio.com"})
+firebase.initializeApp({"apiKey":"AIzaSyCZEcItxMDM33o5vj0Is2LJwhLFE9zbj6U","authDomain":"nuxt-blog-syds.firebaseapp.com","databaseURL":"https:\u002F\u002Fnuxt-blog-syds.firebaseio.com","projectId":"nuxt-blog-syds","storageBucket":"nuxt-blog-syds.appspot.com","messagingSenderId":"482298136194","appId":"1:482298136194:web:cf597214ed89fedebf569b","measurementId":"G-L9EGJ6Z2S3"})
 
 // Initialize authService
 const authService = firebase.auth()

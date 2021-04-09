@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-blog",
+  "name": "nuxt-blog-ts",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -9,16 +9,18 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.12.5",
+    "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/firebase": "^7.5.0",
     "@nuxtjs/pwa": "^3.3.5",
-    "core-js": "^3.8.3",
+    "core-js": "^3.9.1",
     "firebase": "^8.2.10",
     "firebase-admin": "^9.5.0",
-    "nuxt": "^2.14.12",
+    "nuxt": "^2.15.3",
     "vue-quill-editor": "^3.0.6"
   },
   "devDependencies": {
+    "@nuxt/types": "^2.15.3",
+    "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/vuetify": "^1.11.3"
   }

@@ -12,9 +12,11 @@
   </v-chip>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   name: "profile-update-button",
   props: [ 'username' ]
-}
+})
 </script>

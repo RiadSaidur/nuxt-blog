@@ -23,8 +23,10 @@
   </v-form>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   props: ["profile", "updateProfile"],
   data () {
     return {
@@ -39,10 +41,10 @@ export default {
         }
       ],
       textRules: [
-        value => !!value || 'Required.',
-        value => (value && value.length >= 3) || 'Min 3 characters',
+        (value: string) => !!value || 'Required.',
+        (value: string) => (value && value.length >= 3) || 'Min 3 characters',
       ]
     }
   }
-}
+})
 </script>

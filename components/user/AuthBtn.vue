@@ -28,10 +28,11 @@
   </div>
 </template>
 
-<script>
-import User from '@/components/user/User'
+<script lang="ts">
+import Vue from 'vue'
+import User from '@/components/user/User.vue'
 
-export default {
+export default Vue.extend({
   components: {
     User
   },
@@ -42,5 +43,5 @@ export default {
     }
 
   }
-}
+})
 </script>

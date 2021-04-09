@@ -15,14 +15,16 @@
   </v-container>
 </template>
 
-<script>
-import PostCard from "@/components/posts/PostCard"
+<script lang="ts">
+import Vue from 'vue'
 
-export default {
+import PostCard from "@/components/posts/PostCard.vue"
+
+export default Vue.extend({
   name: "Posts",
   props: ["posts"],
   components: {
     PostCard
   }
-}
+})
 </script>

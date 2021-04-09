@@ -4,10 +4,12 @@
   </v-container>
 </template>
 
-<script>
-import Posts from "@/components/posts/Posts"
+<script lang="ts">
+import Vue from 'vue'
 
-export default {
+import Posts from "@/components/posts/Posts.vue"
+
+export default Vue.extend({
   components: {
     Posts
   },
@@ -24,5 +26,5 @@ export default {
   mounted() {
     this.$store.dispatch('posts/getPosts')
   }
-}
+})
 </script>

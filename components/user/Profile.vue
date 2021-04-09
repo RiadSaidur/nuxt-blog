@@ -10,24 +10,26 @@
   </v-card>
 </template>
 
-<script>
-import { getUserByUsername } from '@/helpers/user'
-import ProfileUpdateButton from '@/components/user/ProfileUpdateChip'
+<script lang="ts">
+import Vue from 'vue'
 
-export default {
+import { getUserByUsername } from '@/helpers/user'
+import ProfileUpdateButton from '@/components/user/ProfileUpdateChip.vue'
+
+export default Vue.extend({
   name: 'user-profile',
   components: {
     ProfileUpdateButton
   },
   data() {
     return {
-      userProfile: null,
+      userProfile: {},
       admin: false
     }
   },
   computed: {
     username() {
-      return this.$nuxt._route.params.user
+      return this.$route.params.user
     },
     currentUser() {
       return this.$store.state.user?.username
@@ -39,5 +41,5 @@ export default {
   async fetch() {
     this.userProfile = await getUserByUsername(this.username)
   }
-}
+})
 </script>

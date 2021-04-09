@@ -78,10 +78,12 @@
   </v-form>
 </template>
 
-<script>
-import Delete from "@/components/base/Delete"
+<script lang="ts">
+import Vue from 'vue'
 
-export default {
+import Delete from "@/components/base/Delete.vue"
+
+export default Vue.extend({
   name: "post-editor",
   props: [ "experience", "saveExperience", "update", "deleteExperience", "loading" ],
   components: {
@@ -104,12 +106,12 @@ export default {
       ],
       // Rules for input fields
       textRules: [
-        value => !!value || 'Required.',
-        value => (value && value.length >= 3) || 'Min 3 characters',
+        (value: string) => !!value || 'Required.',
+        (value: string) => (value && value.length >= 3) || 'Min 3 characters',
       ],
       imageRules: [
-        value => !value || value.size < 2000000 || 'Title image size should be less than 2 MB!',
-        value => {
+        (value: File) => !value || value.size < 2000000 || 'Title image size should be less than 2 MB!',
+        (value: File) => {
           if(!value) return false
           else {
             const acceptedTypes = ['png', 'jpg', 'jpeg', 'gif']
@@ -132,13 +134,10 @@ export default {
             [{ script: 'super' }],
             [{ color: [] }],
             ['link', 'image']
-          ],
-          syntax: {
-            highlight: (text) => hljs.highlightAuto(text).value
-          }
+          ]
         }
       }
     }
   }
-}
+})
 </script>

@@ -4,10 +4,13 @@
   </section>
 </template>
 
-<script>
-import PostEditor from "@/components/posts/PostEditor"
+<script lang="ts">
+import Vue from 'vue'
+
+import PostEditor from "@/components/posts/PostEditor.vue"
 import { newPost } from '@/handlers/protected/posts'
-export default {
+
+export default Vue.extend({
   components: {
     PostEditor
   },
@@ -25,6 +28,11 @@ export default {
       },
     }
   },
+  computed: {
+    author(): string {
+      return this.$store.state.user.username
+    }
+  },
   head() {
     return {
       title: `Create Post`
@@ -35,7 +43,7 @@ export default {
     async saveExperience() {
       this.loading =  true
       const post = {
-        author: this.$store.state.user.username,
+        author: this.author,
         ...this.experience
       }
       const postID = await newPost(post)
@@ -57,5 +65,5 @@ export default {
       // }
     }
   }
-}
+})
 </script>

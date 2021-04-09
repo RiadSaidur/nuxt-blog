@@ -52,8 +52,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   name: "delete-action",
   props: [ "type", "deleteItem" ],
   data () {
@@ -67,5 +69,5 @@ export default {
       this.deleteItem()
     }
   }
-}
+})
 </script>

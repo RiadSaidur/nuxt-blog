@@ -5,42 +5,57 @@ const defaultImage = "https://images.unsplash.com/photo-1533850595620-7b17112217
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - nuxt-blog',
-    title: 'nuxt-blog',
+    titleTemplate: '%s - nuxt-blog-ts',
+    title: 'nuxt-blog-ts',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Explore and Share your Experience' },
+      { 
+        charset: 'utf-8' 
+      },
+
+      { 
+        name: 'viewport', content: 'width=device-width, initial-scale=1' 
+      },
+
+      { 
+        hid: 'description', name: 'description', content: 'Explore and Share your Experience with Bangladesh' 
+      },
+
       {
         hid: 'og:description',
         property: 'og:description',
         content: 'Explore and Share your Experience'
       },
+      
       {
         hid: 'og:image',
         property: 'og:image',
         content: defaultImage
       },
+      
       {
         hid: 'og:image:alt',
         property: 'og:image:alt',
         content: 'nuxt-blog'
       },
+      
       {
         hid: 'twitter:title',
         name: 'twitter:title',
         content: 'nuxt-blog'
       },
+      
       {
         hid: 'twitter:description',
         name: 'twitter:description',
         content: 'Explore and Share your Experience'
       },
+      
       {
         hid: 'twitter:image',
         name: 'twitter:image',
         content: defaultImage
       },
+      
       {
         hid: 'twitter:image:alt',
         name: 'twitter:image:alt',
@@ -54,15 +69,16 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    // 'quill/dist/quill.core.css',
-    // for snow theme
     'quill/dist/quill.snow.css',
     '@/assets/main.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '@/plugins/vue-quil-editor.js', ssr: false }
+    { 
+      src: '@/plugins/vue-quil-editor.ts', 
+      ssr: false 
+    }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -70,8 +86,10 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    // https://go.nuxtjs.dev/typescript
+    '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify',
+    '@nuxtjs/vuetify'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -84,17 +102,21 @@ export default {
     '@nuxtjs/dotenv'
   ],
 
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: {},
+
   firebase: {
     config: {
       apiKey: process.env.apiKey,
       authDomain: process.env.authDomain,
+      databaseURL: process.env.databaseURL,
       projectId: process.env.projectId,
       storageBucket: process.env.storageBucket,
       messagingSenderId: process.env.messagingSenderId,
       appId: process.env.appId,
-      measurementId: process.env.measurementId,
-      databaseURL: process.env.databaseURL
+      measurementId: process.env.measurementId
     },
+    
     services: {
       auth: {
         ssr: true,
@@ -105,9 +127,6 @@ export default {
       }
     }
   },
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

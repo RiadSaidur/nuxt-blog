@@ -1,4 +1,4 @@
-# nuxt-blog
+# nuxt-blog-ts
 
 ## Build Setup
 

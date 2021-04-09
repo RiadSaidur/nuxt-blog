@@ -90,10 +90,12 @@
   </v-app>
 </template>
 
-<script>
-import AuthBtn from '../components/user/AuthBtn'
+<script lang="ts">
+import Vue from 'vue'
 
-export default {
+import AuthBtn from '@/components/user/AuthBtn.vue'
+
+export default Vue.extend ({
   components: {
     AuthBtn
   },
@@ -125,7 +127,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'nuxt-blog-syds'
+      title: 'nuxt-blog-ts'
     }
   },
   computed: {
@@ -133,5 +135,5 @@ export default {
       return this.$store.state.user ? true : false
     }
   }
-}
+})
 </script>

@@ -26,10 +26,13 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+
 import { updateUserProfile } from '@/handlers/protected/user'
 import ProfileEditor from '@/components/user/ProfileEditor.vue'
-export default {
+
+export default Vue.extend({
   components: { ProfileEditor },
   middleware: ['authenticated'],
   data() {
@@ -53,7 +56,7 @@ export default {
       }
     },
     targetUser() {
-      return this.$nuxt._route.params.user
+      return this.$route.params.user
     }
   },
   created() {
@@ -72,9 +75,9 @@ export default {
         this.text = "Updating profile failed"
       }
     },
-    replaceWhiteSpaceAndToLowerCase(text) {
+    replaceWhiteSpaceAndToLowerCase(text: string) {
       return text.replaceAll(/\s/g,'').toLowerCase()
     }
   }
-}
+})
 </script>
