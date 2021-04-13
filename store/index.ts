@@ -2,15 +2,16 @@ import { createNewUser, getUserByUid } from "@/helpers/user"
 
 import { ActionTree, MutationTree } from 'vuex'
 
-import { UserState } from "@/interface/state/userState"
 import { USER } from "@/interface/types/user"
 
-export const state = (): UserState => ({
-  token: null,
-  user: null
+export const state = () => ({
+  token: '',
+  user: {} as USER
 })
 
-export const mutations: MutationTree<UserState> = {
+export type RootState = ReturnType<typeof state>
+
+export const mutations: MutationTree<RootState> = {
   SET_USER(state, userInfo: USER) {
     state.user = userInfo
   },
@@ -25,12 +26,12 @@ export const mutations: MutationTree<UserState> = {
   },
 
   REMOVE_USER(state) {
-    state.user = null
-    state.token  = null
+    state.user = {} as USER
+    state.token  = ''
   }
 }
 
-export const actions: ActionTree<UserState, UserState> = {
+export const actions: ActionTree<RootState, RootState> = {
   async onAuthStateChangedAction({ dispatch, commit }, { authUser }) {
     if(!authUser) return commit('REMOVE_USER')
 

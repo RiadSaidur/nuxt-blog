@@ -1,3 +1,29 @@
 a {
   text-decoration: none;
 }
+
+.rich-text img {
+  max-width: 100%;
+}
+
+.rich-text p {
+  display: flex;
+}
+
+.rich-text p img {
+  margin: auto;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(75, 75, 75);
+}
+
+::-webkit-scrollbar-thumb {
+  background: grey;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(197, 197, 197);
+}

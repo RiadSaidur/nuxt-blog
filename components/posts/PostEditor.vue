@@ -19,16 +19,6 @@
       </v-list-item-content>
     </v-list-item>
 
-    <!-- <v-text-field
-      v-model="experience.Title"
-      :label="experience.Title"
-      :rules="textRules"
-      hide-details="auto"
-      class="mb-5"
-      autocomplete="off"
-      prepend-icon="mdi-format-title"
-    ></v-text-field> -->
-
     <!-- Date -->
     <v-menu
       v-model="isMenu"
@@ -59,6 +49,7 @@
       <quill-editor
         v-model="experience.Body"
         :options="editorOption"
+        class="rich-text"
       />
     </client-only>
 
@@ -94,6 +85,7 @@ import { POST } from '@/interface/types/post'
 
 import Delete from "@/components/base/Delete.vue"
 import { getPostByID } from '@/handlers/public/posts'
+import { savePostBodyImages } from '@/handlers/protected/posts'
 
 interface NEWPOST extends POST {
   author: string;
@@ -150,7 +142,6 @@ export default Vue.extend({
             [{ header: 2 }],
             [{ list: 'ordered' }, { list: 'bullet' }],
             [{ script: 'super' }],
-            [{ color: [] }],
             ['link', 'image']
           ]
         }
@@ -160,13 +151,70 @@ export default Vue.extend({
   computed: {
     postID(): string {
       return this.$route.params.postID
+    },
+    author(): string {
+      return this.$store.state.user.username
     }
   },
   async fetch() {
     if(this.update) this.experience = <NEWPOST>(await getPostByID(this.postID))
   },
   methods: {
-    saveExperience() {
+    dataURLtoFile(dataurl: string, filename: string) {
+      let arr = dataurl.split(',')
+      const mime = arr[0]?.match(/:(.*?);/)?.[1]
+      const bstr = atob(arr[1])
+      const n = bstr.length
+      const u8arrs = new Uint8Array(n)
+      
+      u8arrs.forEach((u8arr, idx) => {
+        u8arrs[idx] = bstr.charCodeAt(idx);
+      })
+
+      return new File([u8arrs], filename, {type:mime});
+    },
+
+    getImageFiles(images: NodeListOf<Element>, author: string): File[] {
+      const imageFiles = [] as File[]
+
+      images.forEach(async image => {
+        if(image.getAttribute('src')?.startsWith('data:image/')) {
+          const imageDataUrl = <string>image.getAttribute('src')
+          const imageFileName = `${author}-${Math.floor(Math.random() * 1000000)}`
+          const imageFile = this.dataURLtoFile(imageDataUrl, imageFileName)
+          imageFiles.push(imageFile)
+        }
+      })
+
+      return imageFiles
+    },
+
+    async uploadImages(imageFiles: File[], author: string): Promise<string[]> {
+      const imageURLs = await savePostBodyImages(imageFiles, author)
+      return imageURLs
+    },
+
+    async saveExperience() {
+      this.experience.author = this.author
+      const images = document.querySelectorAll("div .ql-editor p img")
+      if(images.length) {
+        const imageFiles = this.getImageFiles(images, this.author)
+        const imageURLs = await this.uploadImages(imageFiles, this.author)
+
+        if(imageURLs.length) {
+          let imageURLidx = 0
+          images.forEach(image => {
+            if(image.getAttribute('src')?.startsWith('data:image/')) {
+              image.removeAttribute('src')
+              image.setAttribute('src', imageURLs[imageURLidx])
+              imageURLidx++
+            }
+          })
+        }
+        const textEditorInnerHtml = document.querySelector("div .ql-editor")?.innerHTML
+        this.experience.Body = <string>textEditorInnerHtml
+      }
+      
       this.$emit('submit', this.experience)
     }
   }

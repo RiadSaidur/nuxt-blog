@@ -3,7 +3,7 @@
     :loading="isLoading"
     elevation="24"
   >
-    <div v-if="user">
+    <div v-if="user.username">
       <div class="d-flex justify-center py-3">
         <v-avatar
           v-if="user.photoURL"
@@ -26,7 +26,7 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn @click="signin" v-if="!user">
+      <v-btn @click="signin" v-if="!user.username">
         <v-icon class="mr-2">mdi-google</v-icon>
         Login with Google
       </v-btn>
@@ -70,7 +70,7 @@ export default Vue.extend({
             email: user?.email,
             photoURL: user?.photoURL,
             uid: user?.uid,
-            username: `${ user?.displayName?.replaceAll(/\s/g,'').toLowerCase() }-${Math.random() * 1000}`
+            username: `${ user?.displayName?.replaceAll(/\s/g,'').toLowerCase() }-${Math.floor(Math.random() * 1000)}`
           }
           
           this.$store.dispatch('getUser', userProfle)

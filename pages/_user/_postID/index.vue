@@ -1,9 +1,23 @@
 <template>
-  <v-container>
-    <v-card elevation="0 pt-4">
-      <v-img :src="post.TitleImage || defaultImage" max-height="300px" :contain="true"/>
+  <v-container class="d-flex flex-wrap justify-center align-center px-0">
+    <v-card elevation="0">
+      <v-img
+        :src="post.TitleImage || defaultImage"
+        max-height="calc(80vh)"
+        class="back-image-container"
+      >
+        <v-spacer></v-spacer>
+        <post-actions
+          class="action-buttons"
+          v-if="post.likes"
+          :likes="post.likes"
+          :shareInfo="shareInfo"
+          @isLiked="updatePostLikeStatus"
+        />
+      </v-img>
 
       <v-card-title v-text='post.Title' />
+
 
       <v-card-subtitle class="mt-2">
           <v-icon>mdi-account</v-icon> <nuxt-link :to="`/${post.author}`" v-text="post.author" /> |
@@ -16,13 +30,11 @@
       <v-card-text>
         <p>
           <v-icon>mdi-map-marker</v-icon> {{ post.Place }} |
-          <v-icon>mdi-calendar</v-icon> {{ post.createdAt }}
+          <v-icon>mdi-calendar</v-icon> {{ post.VisitDate }} |
         </p>
       </v-card-text>
 
-      <v-card-text>
-        <p v-html="post.Body"></p>
-      </v-card-text>
+      <v-card-text v-html="post.Body" class="rich-text" />
     </v-card>
     <Comments />
   </v-container>
@@ -33,6 +45,7 @@ import Vue from 'vue'
 import { POST } from '@/interface/types/post'
 
 import Comments from "@/components/comments/Comments.vue"
+import PostActions from '@/components/posts/PostActions.vue'
 
 interface POSTVIEW extends POST {
   author: string;
@@ -40,10 +53,17 @@ interface POSTVIEW extends POST {
   TitleImage: string;
 }
 
+interface SHARE {
+  Title: string;
+  author: string;
+  postID: string;
+}
+
 export default Vue.extend({
   name: "Post",
   components: {
-    Comments
+    Comments,
+    PostActions
   },
   data() {
     return {
@@ -110,10 +130,46 @@ export default Vue.extend({
     isAuthor(): boolean {
       return this.$store.state.user?.username === this.post.author
     },
+    currentUserEmail(): string {
+      return this.$store.state.user.email
+    },
+    shareInfo(): SHARE {
+      const info = {
+        Title: this.post.Title,
+        author: this.post.author,
+        postID: this.postID
+      }
+      return info
+    }
   },
   async fetch() {
     this.post = await this.$store.getters['posts/getSinglePost'](this.postID)
-    this.post.slug = this.post.Body.split(/\<*>/g)[1].split(/<\//g)[0]
+    this.post.slug = this.post.Body.split(/\<*>/g)[1].split(/<\//g)[0] 
+  },
+  methods: {
+    updatePostLikeStatus(isLiked: boolean) {
+      if(isLiked) {
+        if(this.post.likes.includes(this.currentUserEmail)) {
+          this.post = {
+            ...this.post,
+            likes: this.post.likes.filter(likedBy => likedBy != this.currentUserEmail)
+          }
+        } else {
+          this.post.likes.push(this.currentUserEmail)
+        }
+      }
+    }
   }
 })
 </script> 
+
+<style scoped>
+  .back-image-container {
+    position: relative;
+  }
+  .action-buttons {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+</style>

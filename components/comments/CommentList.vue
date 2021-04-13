@@ -1,5 +1,5 @@
 <template>
-  <v-container class="px-0">
+  <v-container class="px-0 mt-2">
     <v-list>
         <CommentListItem
           v-for="(comment, idx) in commentList"

@@ -48,10 +48,11 @@ export default Vue.extend({
     // Save experience in the DB
     async saveExperience(experience: NEWPOST) {
       this.loading =  true
-      experience.author = this.author
+
       const postID = await newPost(experience)
       if(postID) this.$nuxt.$options.router.push(`/posts/${postID}`)
       else console.log('ops')
+
       this.loading = false
 
       // if(this.experience.Title && this.experience.Body && this.experience.Place) {

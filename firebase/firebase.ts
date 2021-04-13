@@ -24,4 +24,4 @@ export const comments = db.collection("comments")
 export const users = db.collection("users")
 
 const storage = firebase.storage()
-export const titleImage = storage.ref()
+export const storageRef = storage.ref()

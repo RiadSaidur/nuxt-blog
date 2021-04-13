@@ -27,7 +27,8 @@ export default Vue.extend({
   middleware: ['authenticated'],
   data() {
     return {
-      loading: false
+      loading: false,
+      experience: {} as NEWPOST
     }
   },
   head(): HEAD {
@@ -44,9 +45,6 @@ export default Vue.extend({
     },
     currentUser(): string {
       return this.$store.state.user?.username
-    },
-    experience(): NEWPOST {
-      return this.$store.state.posts.postForm
     }
   },
   async fetch() {

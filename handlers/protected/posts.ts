@@ -15,7 +15,7 @@ export const newPost = async (post: NEWPOST) => {
 
   // upload title image if available
   if(post.TitleImage) {
-    const imageURL = await uploadTitleImage(postData.author, post.TitleImage)
+    const imageURL = await uploadTitleImage(postData.author, 'title', post.TitleImage)
     if(!imageURL) return false
     postData.TitleImage = imageURL
   }
@@ -28,6 +28,16 @@ export const newPost = async (post: NEWPOST) => {
   await createCommentDoc(postID)
 
   return postID
+}
+
+// upload images of post body by text editor
+export const savePostBodyImages = async (images: File[], author: string) => {
+  const imageURLs = [] as string[]
+  for(let idx = 0; idx < images.length; idx++) {
+    const imageURL = await uploadTitleImage(author, 'post', images[idx])
+    imageURLs.push(imageURL)
+  }
+  return imageURLs
 }
 
 // update blog post

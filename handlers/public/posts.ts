@@ -20,7 +20,8 @@ export const getAllPosts = async () => {
         TitleImage: data?.TitleImage,
         author: data.author,
         createdAt: data.createdAt,
-        updatedAt: data?.updatedAt
+        updatedAt: data?.updatedAt,
+        likes: data?.likes
       }
       postDatas.push(post)
     })
@@ -57,7 +58,8 @@ export const getPostByUser = async (username: string) => {
         TitleImage: data?.TitleImage,
         author: data.author,
         createdAt: data.createdAt,
-        updatedAt: data?.updatedAt
+        updatedAt: data?.updatedAt,
+        likes: data?.push
       }
       postDatas.push(post)
     })

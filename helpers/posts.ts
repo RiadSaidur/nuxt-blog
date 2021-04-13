@@ -1,9 +1,5 @@
-import { posts, titleImage, comments } from "@/firebase/firebase"
+import { posts, storageRef, comments, currentUser, firestore } from "@/firebase/firebase"
 import { POST } from "@/interface/types/post"
-
-interface NEWPOST extends POST {
-  author: string;
-}
 
 export const createCommentDoc = async (postID: string) => {
   try {
@@ -14,14 +10,14 @@ export const createCommentDoc = async (postID: string) => {
   }
 }
 
-export const uploadTitleImage = async (author: string, TitleImage: File) => {
+export const uploadTitleImage = async (author: string, type: string, TitleImage: File) => {
   try {
-    await titleImage.child(`${author}/${TitleImage.name}`).put(TitleImage)
-    const imageURL = `https://firebasestorage.googleapis.com/v0/b/travelersofbanagladesh.appspot.com/o/${encodeURI(author)}%2F${TitleImage.name}?alt=media`
+    await storageRef.child(`${author}/${type}/${TitleImage.name}`).put(TitleImage)
+    const imageURL = `https://firebasestorage.googleapis.com/v0/b/nuxt-blog-syds.appspot.com/o/${encodeURI(author)}%2F${type}%2F${TitleImage.name}?alt=media`
     return imageURL
   } catch (err) {
     console.log(err)
-    return false
+    return ''
   }
 }
 
@@ -65,6 +61,28 @@ export const deletePostDocByID = async (postID: string) => {
 export const deleteCommentsDocByID = async (postID: string) => {
   try {
     await comments.doc(postID).delete()
+    return true
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+}
+
+export const likePostByID = async (postID: string) => {
+  try {
+    const author = currentUser()
+    await posts.doc(postID).update({ likes: firestore.FieldValue.arrayUnion(author) })
+    return true
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+}
+
+export const unlikePostByID = async (postID: string) => {
+  try {
+    const author = currentUser()
+    await posts.doc(postID).update({ likes: firestore.FieldValue.arrayRemove(author) })
     return true
   } catch (err) {
     console.log(err)

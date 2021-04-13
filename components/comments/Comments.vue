@@ -1,7 +1,7 @@
 <template>
-  <v-container >
+  <v-container class="px-0">
     <comment-form :addComment="addComment" :comment="comment" v-if="isAuthenticated"/>
-    <comment-list :comments="comments" :deleteComment="deleteComment" />
+    <comment-list v-if="comments.length" :comments="comments" :deleteComment="deleteComment" />
   </v-container>
 </template>
 

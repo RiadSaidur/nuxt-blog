@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="px-0">
-    <v-row dense>
+    <v-row dense v-if="posts">
       <v-col
         v-for="(post, idx) in posts"
         :key="idx"

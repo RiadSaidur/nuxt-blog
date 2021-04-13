@@ -17,53 +17,40 @@
       </v-img>
     </nuxt-link>
 
-    <v-card-actions>
-      <v-spacer></v-spacer>
-
-      <v-btn icon v-if="isAuth">
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon v-if="isAuth">
-        <v-icon>mdi-bookmark</v-icon>
-      </v-btn>
-
-      <v-btn icon @click="sharePost">
-        <v-icon>mdi-share-variant</v-icon>
-      </v-btn>
-    </v-card-actions>
+    <post-actions
+      :likes="post.likes"
+      :shareInfo="shareInfo"
+    />
   </v-card>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import PostActions from './PostActions.vue'
+
+interface SHARE {
+  Title: string;
+  author: string;
+  postID: string;
+}
 
 export default Vue.extend({
+  components: { PostActions },
   name: "Post",
   props: ["post"],
   computed: {
-    isAuth(): string {
-      return this.$store.state.user?.username
+    shareInfo(): SHARE {
+      const info = {
+        Title: this.post.Title,
+        author: this.post.author,
+        postID: this.post.postID
+      }
+      return info
     }
   },
   data() {
     return {
       defaultImage: "https://images.unsplash.com/photo-1533850595620-7b1711221751?ixid=MXwxMjA3fDB8MHxzZWFyY2h8M3x8dHJhdmVsbGluZ3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
-    }
-  },
-  methods: {
-    sharePost() {
-      if(!navigator.share) return
-      
-      try {
-        const shareItem = {
-          title: this.post.Title,
-          url: `${window.location.origin}/${this.post.author}/${this.post.postID}`
-        }
-        navigator.share(shareItem)
-      } catch (err) {
-        console.log(err)
-      }
     }
   }
 })

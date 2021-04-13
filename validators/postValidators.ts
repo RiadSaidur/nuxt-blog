@@ -11,7 +11,8 @@ export const validateNewPost = (post: NEWPOST) => {
     Body: post.Body.trim(),
     VisitDate: post.VisitDate,
     author: post.author,
-    TitleImage: ''
+    TitleImage: '',
+    likes: []
   }
 
   return validatedPost

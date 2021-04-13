@@ -3,7 +3,6 @@
     <v-text-field
       v-model="comment.body"
       label="Leave a comment"
-      :rules="commentRules"
       hide-details="auto"
       autocomplete="off"
     />
@@ -30,10 +29,6 @@ export default Vue.extend({
   ],
   data() {
     return {
-      commentRules: [
-        (value: string) => !!value || 'Required.',
-        (value: string) => (value && value.length >= 2) || 'Min 2 characters',
-      ],
       loading: false
     }
   }

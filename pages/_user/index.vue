@@ -17,21 +17,14 @@
       <v-tab-item>
         <Profile />
       </v-tab-item>
-      <v-tab-item>
-        <Posts :posts="posts" class="mt-5"/>
-      </v-tab-item>
     </v-tabs>
   </v-container>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { POST } from '@/interface/types/post'
-
-import { getPostByUser } from '@/handlers/public/posts'
 
 import Profile from '@/components/user/Profile.vue'
-import Posts from '@/components/posts/Posts.vue'
 
 interface HEAD {
   title: string;
@@ -40,8 +33,7 @@ interface HEAD {
 export default Vue.extend({
   name: "user",
   components: {
-    Profile,
-    Posts
+    Profile
   },
   head(): HEAD {
     return {
@@ -50,20 +42,16 @@ export default Vue.extend({
   },
   data() {
     return {
-      tab: null,
+      tab: 0,
       items: [
-        'Profile', 'Experiences'
-      ],
-      posts: <POST[] | boolean> false
+        'Profile'
+      ]
     }
   },
   computed: {
     user(): string {
       return this.$route.params.user
     }
-  },
-  async fetch() {
-    this.posts = await getPostByUser(this.user)
   }
 })
 </script>

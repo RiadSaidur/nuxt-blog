@@ -49,7 +49,8 @@
       >
         <v-icon>mdi-minus</v-icon>
       </v-btn> -->
-      <v-toolbar-title v-text="title" />
+      <nuxt-link to="/" class="v-toolbar__title" v-text="title" />
+      <!-- <v-toolbar-title to="/" v-text="title" /> -->
       <v-spacer />
       <AuthBtn />
       <!-- <v-btn
@@ -132,8 +133,14 @@ export default Vue.extend ({
   },
   computed: {
     isAuth() {
-      return this.$store.state.user ? true : false
+      return this.$store.state.user.username ? true : false
     }
   }
 })
 </script>
+
+<style scoped>
+  a {
+    color: #FFFFFF;
+  }
+</style>
